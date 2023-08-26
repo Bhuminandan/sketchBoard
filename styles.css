@@ -1,0 +1,87 @@
+/* https://freeicons.io/free-icons-pack/text-icon-14948 icons */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #464646;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--pencil-4);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+:root {
+  --bg-dark: #171717;
+  --bg-ligh: #252525;
+  --bg-extra-ligh: #b6b6b6;
+  --white-: #ededed;
+  --red-: #da0037;
+
+  --pencil-3: #ededed;
+  --pencil-1: #a6d0dd;
+  --pencil-2: #da0037;
+  --pencil-4: #5d9c59;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: var(--bg-dark);
+}
+
+body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.tools-container {
+  margin-top: 4vh;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: var(--bg-ligh);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.single-tool-container {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.single-tool-container:hover {
+  scale: 1.05;
+}
+.single-tool-container:active {
+  transform: translateY(4px);
+}
+.single-tool-container img {
+  background-color: var(--bg-ligh);
+  width: 40px;
+  height: 40px;
+}
+
+.cursorImagStyle {
+  width: 10px;
+  height: 10px;
+}
+
+.active-tool-container {
+  border-bottom: 3px solid var(--pencil-4);
+  border-radius: 4px;
+  background-color: var(--bg-extra-ligh);
+}
