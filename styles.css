@@ -1,4 +1,5 @@
 /* https://freeicons.io/free-icons-pack/text-icon-14948 icons */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
 /* width */
 ::-webkit-scrollbar {
@@ -21,7 +22,7 @@
 }
 
 :root {
-  --bg-dark: #171717;
+  --bg-dark: #0b0b0b;
   --bg-ligh: #252525;
   --bg-extra-ligh: #b6b6b6;
   --white-: #ededed;
@@ -38,6 +39,7 @@
   margin: 0;
   box-sizing: border-box;
   background-color: var(--bg-dark);
+  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -50,8 +52,9 @@ body {
 }
 
 .tools-container {
-  margin-top: 4vh;
-  padding: 10px 20px;
+  z-index: 99;
+  margin-top: 2vh;
+  padding: 20px 20px;
   border-radius: 10px;
   background-color: var(--bg-ligh);
   position: absolute;
@@ -84,4 +87,209 @@ body {
   border-bottom: 3px solid var(--pencil-4);
   border-radius: 4px;
   background-color: var(--bg-extra-ligh);
+}
+
+#canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 150px;
+  z-index: 100;
+  color: var(--pencil-4);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #06403e;
+}
+.stikynote-header {
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 10px;
+  position: absolute;
+  background-color: #323232;
+}
+
+.stikynote-header p {
+  font-size: 14px;
+  align-self: center;
+  font-family: sans-serif;
+  background-color: transparent;
+  color: white;
+}
+.wrapper-div textarea {
+  padding: 10px;
+  background-color: rgb(217, 255, 253);
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
+.movable-icon {
+  width: 40px;
+  margin-right: 15px;
+  height: 10px;
+  border-radius: 10px;
+  background-color: rgb(155, 155, 155);
+  cursor: grab;
+  align-self: center;
+}
+
+.stiky-options {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0px;
+  gap: 5px;
+  background-color: transparent;
+}
+
+.minimize-option {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ffea00;
+  cursor: pointer;
+  z-index: 11;
+}
+
+.close-option {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--pencil-2);
+  cursor: pointer;
+  z-index: 11;
+}
+
+.pencil-container {
+  position: relative;
+}
+
+.pencil-options-div {
+  position: absolute;
+  background-color: #252525;
+  width: 150px;
+  height: 150px;
+  box-shadow: rgba(208, 208, 208, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  left: -50px;
+  padding: 20px;
+  display: none;
+  margin-top: 20px;
+}
+
+.pencil-width {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.pencil-width label {
+  background-color: transparent;
+  color: white;
+  font-size: 12px;
+}
+.eraser-container {
+  position: relative;
+}
+.eraser-options-div {
+  position: absolute;
+  background-color: #252525;
+  width: 150px;
+  height: 100px;
+  box-shadow: rgba(208, 208, 208, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  left: -40px;
+  padding: 20px;
+  display: none;
+  margin-top: 20px;
+}
+
+.eraser-width {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  gap: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.eraser-width label {
+  background-color: transparent;
+  color: white;
+  font-size: 12px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  border-radius: 15px;
+  background-color: var(--pencil-4);
+  margin-bottom: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--pencil-1);
+  cursor: pointer;
+}
+
+.pencil-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  background-color: transparent;
+}
+
+.pencil-color-item {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+.pencil-color-item:hover {
+  scale: 1.09;
+}
+.grey-color {
+  background-color: #d3d3d3;
+}
+
+.orange-color {
+  background-color: #ff8383;
+}
+
+.green-color {
+  background-color: #3a994c;
+}
+
+.skyblue-color {
+  background-color: #56a2e8;
+}
+
+.brown-color {
+  background-color: #b76100;
 }

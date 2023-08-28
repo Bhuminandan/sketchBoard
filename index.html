@@ -11,9 +11,44 @@
     <div class="tools-container">
       <div class="pencil-container single-tool-container">
         <img src="./assets/pencil.png" alt="pencil" id="pencil" />
+        <div class="pencil-options-div">
+          <div class="pencil-width">
+            <label for="vol">Pen Size</label>
+            <input
+              type="range"
+              step="2"
+              value="3"
+              id="vol"
+              name="vol"
+              min="3"
+              max="25"
+            />
+          </div>
+          <div class="pencil-color">
+            <div class="grey-color pencil-color-item" id="#d3d3d3"></div>
+            <div class="orange-color pencil-color-item" id="#ff8383"></div>
+            <div class="green-color pencil-color-item" id="#3a994c"></div>
+            <div class="skyblue-color pencil-color-item" id="#56a2e8"></div>
+            <div class="brown-color pencil-color-item" id="#b76100"></div>
+          </div>
+        </div>
       </div>
       <div class="eraser-container single-tool-container">
         <img src="./assets/eraser.png" alt="eraser" id="eraser" />
+        <div class="eraser-options-div">
+          <div class="eraser-width">
+            <label for="vol">Eraser Size</label>
+            <input
+              type="range"
+              step="2"
+              value="20"
+              id="easervol"
+              name="vol"
+              min="20"
+              max="100"
+            />
+          </div>
+        </div>
       </div>
       <div class="undo-container single-tool-container">
         <img src="./assets/undo.png" alt="undo" id="undo" />
@@ -34,7 +69,23 @@
         <img src="./assets/upload.png" alt="upload" id="upload" />
       </div>
     </div>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas"> </canvas>
+    <!-- <div class="wrapper-div">
+      <div class="stikynote-header">
+        <p>Note 1</p>
+        <div class="movable-icon"></div>
+        <div class="stiky-options">
+          <div class="minimize-option"></div>
+          <div class="close-option"></div>
+        </div>
+      </div>
+      <textarea
+        name="sticky-text"
+        id="stickytext"
+        cols="30"
+        rows="10"
+      ></textarea>
+    </div> -->
   </body>
   <script src="./script.js"></script>
 </html>
