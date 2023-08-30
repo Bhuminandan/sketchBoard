@@ -19,32 +19,38 @@ const body = document.querySelector("body");
 const canvas = document.querySelector("canvas");
 
 // Global Varible
-let currentColor = "white"
-let currentPenWidth = 5;
-let currentEeaserWidth = 20;
-let undoRedoCache = [canvas.toDataURL()];
-let currentUrlIndex = 0;
+let currentColor = "white" // Setting initial color
+let currentPenWidth = 5; // setting initial width of the pen
+let currentEeaserWidth = 20; // Setting initial width of th eraser
+let undoRedoCache = [canvas.toDataURL()]; // Making the cache array to store 
+// the current progress for workin of the redo undo and setting the current img for first reference
+let currentUrlIndex = 0; // for current img referece
 
-
+// Variable to maintain the current state of the pencil
 isPencilActive = false;
-pencilCont.addEventListener("click", () => handlePencilCont(true))
+pencilCont.addEventListener("click", () => handlePencilCont(true));
 
+// Variable to maintain the current state of the earaer
 isEraserActive = false;
-eraserCont.addEventListener("click", handleEaraserCont)
+eraserCont.addEventListener("click", handleEaraserCont);
 
 
+// function to handle when clicked on the pencil
 function handlePencilCont() {
-    if (!isPencilActive) {
-        if (isEraserActive) {
+    if (!isPencilActive) { // if pencil is active then enter this loop (! isPencilActive === true);
+        if (isEraserActive) { // checking when user clicked on the pencil is the eraser active or not, 
+            // if it is active we are calling function and making it inactive
             handleEaraserCont();
             isEraserActive = false;
         }
+        // setting pencil properties dropdown as block
         pencilOptionsDiv.style.display = "block";
         isPainting = false;
-        changeCursorStyle("pencil", false);
-        pencilCont.classList.add("active-tool-container");
+        changeCursorStyle("pencil", false); // Changing the cursor into pencil img
+        pencilCont.classList.add("active-tool-container"); // giving styles of active to the pencil
         isPencilActive = true;
     } else {
+        // Doing everything opposite what we have did ubove when user clickes again
         pencilOptionsDiv.style.display = "none";
         changeCursorStyle("", true);
         pencilCont.classList.remove("active-tool-container");
@@ -52,7 +58,7 @@ function handlePencilCont() {
     }
 }
 
-
+// Same way handling the earaser click like we handled the pencil click
 function handleEaraserCont() {
     if (!isEraserActive) {
         if (isPencilActive) {
@@ -73,7 +79,7 @@ function handleEaraserCont() {
     }
 }
 
-
+// function to toggle the style of the cusor (for pencil and eraser click)
 function changeCursorStyle(clikedItem, convertToNormal) {
     if (convertToNormal) {
         body.style.cursor = `default`;
@@ -82,17 +88,18 @@ function changeCursorStyle(clikedItem, convertToNormal) {
     }
 }
 
-
+// Adding eventlisteners to each pencil color option
 pencilColorArr.forEach((singleEle) => {
     singleEle.addEventListener("click", (e) => {
         e.stopPropagation();
         isPencilActive = false;
         currentColor = e.target.id;
-        // pencilOptionsDiv.style.display = "none";
         handlePencilCont(false);
     })
 })
 
+
+// Adding eventlisteners to the range input for stroke width of the pencil
 rangeInputEle.addEventListener("change", (e) => {
     e.stopPropagation();
     isPencilActive = true;
@@ -100,6 +107,7 @@ rangeInputEle.addEventListener("change", (e) => {
     handlePencilCont(false);
 })
 
+// Adding eventlisteners to the range input for stroke width of the eraser
 easerRangeInputEle.addEventListener("change", (e) => {
     e.stopPropagation();
     isEraserActive = true;
@@ -107,18 +115,19 @@ easerRangeInputEle.addEventListener("change", (e) => {
     handleEaraserCont(false);
 })
 
-
+// Handling the download funcitonality
 downloadCont.addEventListener("click", () => {
     let url = canvas.toDataURL("image/jpeg"); // Specify the MIME type here
-    const blob = dataURItoBlob(url);
-    const link = document.createElement("a");
-    // Convert blob to downloadable URL
-    link.href = URL.createObjectURL(blob);
+    const blob = dataURItoBlob(url); // seting the url to to the custome obj to convert the url in to blob
+    const link = document.createElement("a"); // creating the anchor element
+    link.href = URL.createObjectURL(blob); // Convert blob to downloadable URL
     link.download = "whiteboard.jpeg";
     // Trigger the download
     link.click();
 });
 
+
+// Custome function that takes and URL and converts it into blob
 function dataURItoBlob(dataURI) {
     // Split the data URI into the MIME type and data
     const splitDataURI = dataURI.split(",");
@@ -135,23 +144,20 @@ function dataURItoBlob(dataURI) {
     return new Blob([uint8Array], { type: mime });
 }
 
-
+// Triggering the inputfile element when someone click on the img icon
 uploadCont.addEventListener("click", () => {
     fileInput.click();
 })
 
 
-
+// handling the uploaded file by attaching change eventlistener
 fileInput.addEventListener("change", (event) => {
-    console.log("inside upload")
     const file = event.target.files[0];
-    if (file) {
+    if (file) { // Additional check for file input
         const reader = new FileReader();
-
-        reader.onload = (loadEvent) => {
-            const image = new Image();
-            image.src = loadEvent.target.result;
-
+        reader.onload = (loadEvent) => { // when reader is ready trigger this
+            const image = new Image(); // Creating instance of img
+            image.src = loadEvent.target.result; // adding the url in event in img src
             // When the image is loaded, draw it on the canvas
             image.onload = () => {
                 canvas.width = image.width;
@@ -184,14 +190,16 @@ let lineWidth = 5;
 let startX;
 let startY;
 
+// Getting the 2D context in ctx
 const ctx = canvas.getContext('2d');
 
+// Function to draw on canvas
 const draw = (e) => {
 
     if (!isPainting) {
         return;
     }
-
+    // Checking if the isPainting is active and one of the pencil and easer is active
     if (isPainting && isPencilActive || isEraserActive) {
         ctx.lineWidth = lineWidth;
         if (isEraserActive) {
@@ -201,15 +209,18 @@ const draw = (e) => {
             ctx.lineWidth = currentPenWidth;
             ctx.strokeStyle = `${currentColor}`;
         }
-        ctx.lineCap = 'round'
-        ctx.lineJoin = 'round'
+
+        // Making the strokes smooth here
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        // Adjusting the offsets
         ctx.lineTo(e.clientX - canvasOffsetX - 0, e.clientY - -30);
         ctx.stroke();
     }
 }
 
-
-
+// On mousedown event & handler
 canvas.addEventListener('mousedown', (e) => {
     isPainting = true;
     startX = e.clientX;
@@ -217,18 +228,24 @@ canvas.addEventListener('mousedown', (e) => {
     clearCanvas()
 });
 
+// On mousemove calling draw function
 canvas.addEventListener('mousemove', draw);
 
+// On mouseup event & handler
 canvas.addEventListener('mouseup', e => {
     isPainting = false;
-    ctx.stroke();
-    ctx.beginPath();
+    ctx.stroke(); // Adding the stroke till here
+    ctx.beginPath(); // If we do not add this line pen takes the last stopped line as bigin path
+
+    // converting the current state into url
     let url = canvas.toDataURL();
+    // Pushing it in and array that maintains states (in our case it is undoredoCasche)
     undoRedoCache.push(url);
+    // Setting the current index as the last state
     currentUrlIndex = undoRedoCache.length - 1;
 });
 
-
+// Undo click event handler
 undoCont.addEventListener("click", () => {
     if (currentUrlIndex > 0) {
         currentUrlIndex--;
@@ -237,6 +254,7 @@ undoCont.addEventListener("click", () => {
 
 })
 
+// redo click event handler
 redoCont.addEventListener("click", () => {
     if (currentUrlIndex < undoRedoCache.length - 1) {
         currentUrlIndex++;
@@ -245,18 +263,18 @@ redoCont.addEventListener("click", () => {
 
 })
 
-
+// Function to render the state for undo and redo
 function renderUrlOnCanvas(index) {
     let url = undoRedoCache[index];
     let img = new Image();
     img.src = url;
     img.onload = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clearing the prev state before adding the new state
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
 }
 
-
+// Function to remove any dropdowns when we start drawing on the canvas
 function clearCanvas() {
     let pencilOptionsDiv = document.querySelector(".pencil-options-div");
     pencilOptionsDiv.style.display = "none";
@@ -264,9 +282,13 @@ function clearCanvas() {
     eraserOptionsDiv.style.display = "none";
 }
 
+// Handling the sitcky notes container
 stickylCont.addEventListener("click", handleSticyCont);
 
+// Initial count of the stickynotes for sticky notes heading 
 let stikyNotesCount = 1;
+
+// stiky notes handler
 function handleSticyCont() {
     let wrapperDiv = document.createElement("div");
     wrapperDiv.classList.add("wrapper-div");
@@ -289,6 +311,7 @@ function handleSticyCont() {
     let minimize = wrapperDiv.querySelector(".minimize-option");
     let remove = wrapperDiv.querySelector(".close-option");
 
+    // Minimize stiky notes functionality
     minimize.addEventListener("click", () => {
         let textarea = wrapperDiv.querySelector("#stickytext");
         if (textarea.style.display == 'none') {
@@ -300,13 +323,16 @@ function handleSticyCont() {
         }
     })
 
+    // delete stiky notes functionality
     remove.addEventListener("click", () => {
         wrapperDiv.remove();
         stikyNotesCount--;
     })
 
     let currstikyNote = wrapperDiv;
-    let maoveIcon = wrapperDiv.querySelector(".movable-icon");
+    let maoveIcon = wrapperDiv.querySelector(".movable-icon"); // icon to grab and drag the stiky note
+
+    // Making the whole stiky note draggable
     maoveIcon.onmousedown = function (event) {
         // (1) prepare to moving: make absolute and on top by z-index
         currstikyNote.style.position = 'absolute';
